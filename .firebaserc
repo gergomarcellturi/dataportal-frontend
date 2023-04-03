@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "dataportal-fb2e8": {
+      "hosting": {
+        "dataportal-frontend": [
+          "dataportal-fb2e8"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "dataportal-fb2e8"
+  }
+}

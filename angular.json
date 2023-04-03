@@ -94,6 +94,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "dataportal-frontend:build:production",
+            "firebaseProject": "dataportal-fb2e8",
+            "firebaseHostingSite": "dataportal-fb2e8"
+          }
         }
       }
     }

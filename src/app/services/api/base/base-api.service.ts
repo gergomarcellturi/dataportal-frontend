@@ -24,6 +24,32 @@ export class BaseApiService<T> {
     @Inject(String) protected controllerUrl: string,
   ) { }
 
+  protected callStorage = (method: HTTP, apiEntry: string, options?: {
+    body?: any;
+    headers?: HttpHeaders | {
+      [header: string]: string | string[];
+    };
+    context?: HttpContext;
+    observe?: 'body';
+    params?: HttpParams | {
+      [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+    };
+    responseType?: 'json';
+    reportProgress?: boolean;
+    withCredentials?: boolean;
+  }): Observable<T | undefined> => {
+    return this.http.request<Response<T>>(method, `${environment.storageRoot}/${this.controllerUrl}/${apiEntry}`, options).pipe(
+      switchMap(result => {
+        switch (result.status) {
+          case ResponseStatus.OK:
+            return of(result.data);
+          case ResponseStatus.ERROR:
+            console.error(result)
+            return of(undefined);
+        }
+      })
+    )
+  }
   protected call = (method: HTTP, apiEntry: string, options?: {
     body?: any;
     headers?: HttpHeaders | {

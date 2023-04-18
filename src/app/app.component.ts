@@ -1,18 +1,20 @@
 import {Component, OnDestroy} from '@angular/core';
-import {AuthService} from "./services/auth.service";
-import {AuthApiService} from "./services/api/auth-api.service";
+import {GlobalService} from "./services/global.service";
+import {fadeOutOnLeave} from "./consts/animations";
+import {AnimationService} from "./services/animation.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [fadeOutOnLeave]
 })
 export class AppComponent implements OnDestroy{
   title = 'dataportal-frontend';
 
   constructor(
-    private auth: AuthService,
-    private authApi: AuthApiService,
+    public global: GlobalService,
+    public animationService: AnimationService
   ) {
   }
 

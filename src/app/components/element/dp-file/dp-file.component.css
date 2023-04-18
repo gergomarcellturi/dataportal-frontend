@@ -1,0 +1,97 @@
+.file-container {
+  display: flex;
+  flex-direction: row;
+  /*border: solid 2px var(--secondary-color);*/
+  padding: 6px;
+  justify-content: space-between;
+  border-radius: 3px;
+  width: 100%;
+  align-items: center;
+  transition: .2s;
+}
+
+.file-container:active {
+  transform: scale(.98) translateY(4px) translateX(4px);
+}
+
+.file-container:hover {
+  background-color: rgba(0,0,0,.05);
+}
+
+.file-container p {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.vertical-divider-file {
+  width: 1px;
+  margin-left: 8px;
+  background-color: var(--bg-color-faded);
+  border-radius: 2rem;
+  height: 28px;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.side {
+  display: flex;
+  flex-direction: row;
+}
+
+.file-name {
+  font-weight: 500;
+  font-size: small;
+}
+
+.file-size {
+  font-style: italic;
+  font-size: x-small;
+}
+
+.upload {
+  justify-content: center
+}
+
+.confirmed {
+  border-left: 4px solid var(--accept-color);
+}
+
+.unconfirmed {
+  border-left: 4px solid var(--warn-color);
+}
+
+
+.finished /deep/ .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: var(--accept-color) !important;;
+}
+
+.interrupted /deep/ .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: var(--danger-color) !important;;
+}
+
+.saving /deep/ .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: var(--warn-color) !important;
+}
+
+/*.mat-progress-spinner circle, .mat-spinner circle {*/
+/*  stroke: #3fb53f;*/
+/*}*/
+
+.progress-feedback {
+  font-size: x-small;
+  font-weight: 500;
+}
+
+.left-side {
+  /*width: 100%;*/
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}

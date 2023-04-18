@@ -12,10 +12,10 @@ export class AuthApiService extends BaseApiService<string> {
   }
 
   public login = (): Observable<string | undefined> => {
-    return this.call(HTTP.POST, "login");
+    return this.call(HTTP.POST, `login`);
   }
-  public logout = (): Observable<string | undefined> => {
-    return this.call(HTTP.POST, "logout");
+  public logout = (authUid: string): Observable<string | undefined> => {
+    return this.call(HTTP.POST, `logout`, {params: {authUid}});
   }
 
 }

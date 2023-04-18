@@ -1,0 +1,24 @@
+<button
+        [type]="type"
+        [id]="id"
+        [class.disabled]="disabled"
+        [class.cursor-pointer]="!disabled"
+        (click)="onClick($event)"
+        [ngClass]="classList"
+        [class.borderless]="borderless"
+        [class.empty-container]="!spanText.innerText"
+>
+  <span class="button-label" [class.empty]="!spanText.innerText">
+    <ng-container *ngIf="disabled">
+          <mat-icon [inline]="true" class="icon noselect lock-icon">lock</mat-icon>
+    </ng-container>
+    <ng-container *ngIf="!disabled">
+          <mat-icon [inline]="iconSize === 'small'" class="icon" *ngIf="icon">{{icon}}</mat-icon>
+    </ng-container>
+    <div class="vertical-divider" *ngIf="icon && spanText.innerText" [class.disabled-vertical-divider]="disabled"></div>
+    <span class="text" #spanText>
+      <ng-content></ng-content>
+    </span>
+  </span>
+
+</button>

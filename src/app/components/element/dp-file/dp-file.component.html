@@ -1,0 +1,69 @@
+<div class="file-container noselect"
+     [class.confirmed]="confirmed && file"
+     [class.unconfirmed]="!confirmed && file"
+     [class.upload]="!file" [class.download]="!!file">
+
+  <div class="side" [class.left-side]="!!file">
+
+    <div class="file-info"  *ngIf="file">
+      <p class="file-name" [hidden]="!fileName">{{fileName}}</p>
+      <p class="file-size" [hidden]="!fileSize">{{fileTypeString}} | {{fileSize}}</p>
+    </div>
+
+    <div class="progress-feedback" *ngIf="uploadStatus !== 'NONE'">
+      <ng-container [ngSwitch]="uploadStatus">
+
+        <span *ngSwitchCase="'UPLOADING'" style="color: var(--primary-color)">Uploading...</span>
+        <span *ngSwitchCase="'SAVING'" style="color: var(--secondary-color)">Saving...</span>
+        <span *ngSwitchCase="'FINISHED'" style="color: var(--accept-color)">Ready</span>
+        <span *ngSwitchCase="'NONE'"></span>
+
+      </ng-container>
+      <span></span>
+    </div>
+
+  </div>
+
+  <div class="side">
+    <div class="vertical-divider-file" *ngIf="file"></div>
+
+    <div>
+      <DPButton [matTooltip]="'Download'" *ngIf="(file && !disableDownload) && confirmed && !isLoading"
+                [borderless]="true"
+                style="margin-left: 3px; margin-right: 3px"
+                icon="download" appearance="success"></DPButton>
+
+      <DPButton [matTooltip]="'Confirm'" *ngIf="file && !confirmed && !isLoading"
+                [borderless]="true"
+                (click)="confirm()"
+                style="margin-left: 3px; margin-right: 3px"
+                icon="check" appearance="success"></DPButton>
+
+      <DPButton [borderless]="true"
+                [matTooltip]="'Clear'"
+                (click)="clear(fileInput)"
+                *ngIf="file && !isLoading" icon="clear" appearance="danger"></DPButton>
+
+      <DPButton (click)="fileInput.click()"
+                *ngIf="!file && !isLoading" appearance="secondary" icon="{{icon}}">
+        <ng-content></ng-content>
+      </DPButton>
+
+      <mat-progress-spinner [value]="loadingProgress"
+                            style="margin-left: 8px"
+                            *ngIf="isLoading"
+                            [diameter]="24"
+                            [mode]="spinnerType"
+                            [class.finished]="uploadStatus === 'FINISHED'"
+                            [class.interrupted]="uploadStatus === 'INTERRUPTED'"
+                            [class.saving]="uploadStatus === 'SAVING'">
+      </mat-progress-spinner>
+
+
+    </div>
+  </div>
+
+  <input style="display: none"
+         (change)="onFileChange($event)"
+         #fileInput type="file">
+</div>

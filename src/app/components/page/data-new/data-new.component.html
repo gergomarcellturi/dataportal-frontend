@@ -1,0 +1,94 @@
+<div class="component-main">
+
+
+  <div class="component-header" FadeOut [@fadeOutOnLeave] @fadeInFromTop>
+    <h3 class="component-h">New Data</h3>
+    <div>
+    </div>
+    <mat-progress-bar
+                      [class.invisible]="!isLoading"
+                      class="component-progress-indicator"
+                      mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <DPDivider></DPDivider>
+
+  <div FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+    <div class="upload-container">
+      <DPFile  [disableDownload]="true"
+               [confirmationRequired]="true"
+               (onMetadataChange)="metadataChange($event)"
+               icon="note_add">
+        Select File
+      </DPFile>
+    </div>
+  </div>
+
+
+
+  <div
+    FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+    <div class="inner-content">
+      <mat-grid-list [cols]="32" rowHeight="80px" style="width: 100%">
+
+        <mat-grid-tile colspan="15">
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Datasource name *</mat-label>
+            <input matInput [(ngModel)]="name">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="2">
+
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="15">
+
+
+          <mat-form-field class="example-chip-list" appearance="fill">
+            <mat-label>Favorite Fruits</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Enter fruits">
+              <mat-chip-row *ngFor="let fruit of fruits"
+                            (removed)="remove(fruit)"
+                            [editable]="true"
+                            (edited)="edit(fruit, $event)"
+                            [aria-description]="'press enter to edit ' + fruit.name">
+                {{fruit.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + fruit.name">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input placeholder="New fruit..."
+                     [matChipInputFor]="chipGrid"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event)"/>
+            </mat-chip-grid>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Tags</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Summary</mat-label>
+        <textarea matInput style="height: 100px"></textarea>
+      </mat-form-field>
+
+      <ckeditor [editor]="EditorClassic" [(ngModel)]="content"></ckeditor>
+
+    </div>
+  </div>
+
+  <div FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+    <div class="inner-content">
+      <DPButton [disabled]="" icon="save" appearance="success" style="margin-left: auto">Save</DPButton>
+    </div>
+  </div>
+
+</div>
+

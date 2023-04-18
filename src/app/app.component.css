@@ -1,0 +1,4 @@
+.main-container {
+  width: min(1400px, 80%);
+  margin: 1rem auto;
+}

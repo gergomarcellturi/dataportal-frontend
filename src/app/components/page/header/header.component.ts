@@ -1,7 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {AuthApiService} from "../../services/api/auth-api.service";
+import {AuthApiService} from "../../../services/api/auth-api.service";
+import {GlobalService} from "../../../services/global.service";
 
 @Component({
   selector: 'app-header',
@@ -17,9 +18,9 @@ export class HeaderComponent implements OnInit {
 
 
   constructor(
-    private auth: AngularFireAuth,
+    public  auth: AngularFireAuth,
+    public global: GlobalService,
     private router: Router,
-    private authApi: AuthApiService,
   ) {}
 
   ngOnInit(): void {
@@ -38,11 +39,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logoutClick() {
-    this.authApi.logout().subscribe(() => {
-      this.auth.signOut()
-        .then(() => this.router.navigate(['/login']))
-        .catch(error => console.log(error));
-    })
+    this.auth.signOut()
+      .then(() => this.router.navigate(['/login']))
+      .catch(error => console.log(error));
   }
 
 }

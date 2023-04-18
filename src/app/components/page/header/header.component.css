@@ -1,0 +1,63 @@
+mat-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: var(--bg-color) !important;
+  flex-wrap: wrap;
+}
+
+.option-group {
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+}
+
+.header-icon {
+  display: flex;
+  opacity: 0;
+  transition: .2s;
+  color: aliceblue;
+  text-shadow: 0 0 6px white;
+}
+
+.header-label {
+  color: aliceblue;
+  transition: .2s;
+  display: flex;
+  font-weight: lighter;
+
+}
+
+.header-option {
+  background-color: transparent;
+  border: none;
+
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-left: 8px;
+  margin-right: 8px;
+  transition: .2s;
+}
+
+.header-option:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.header-option:active {
+  transform: scale(.95);
+}
+
+.header-option:hover .header-icon {
+  opacity: 1;
+}
+
+.header-option:hover .header-label {
+  text-shadow: 0 0 6px white;
+}
+

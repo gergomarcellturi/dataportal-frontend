@@ -1,0 +1,9 @@
+<div class="input-box">
+  <input type="text"
+         #inputEl
+         required
+         (input)="input(inputEl)"
+         [value]="value"
+  >
+  <span><ng-content></ng-content></span>
+</div>

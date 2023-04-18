@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -8,9 +7,9 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './components/login/login.component';
-import { HeaderComponent } from './components/header/header.component';
-import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/page/login/login.component';
+import { HeaderComponent } from './components/page/header/header.component';
+import { HomeComponent } from './components/page/home/home.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
@@ -23,34 +22,64 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./interceptor/auth-interceptor.interceptor";
+import { DpButtonComponent } from './components/element/dp-button/dp-button.component';
+import { MyDataComponent } from './components/page/my-data/my-data.component';
+import { DpInputDirective } from './directives/dp-input.directive';
+import { DpInputComponent } from './components/element/dp-input/dp-input.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { DataEditComponent } from './components/page/data-edit/data-edit.component';
+import { DataNewComponent } from './components/page/data-new/data-new.component';
+import { FadeOutDirective } from './directives/fade-out.directive';
+import { DpDividerComponent } from './components/element/dp-divider/dp-divider.component';
+import { DpFileComponent } from './components/element/dp-file/dp-file.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    DpButtonComponent,
+    MyDataComponent,
+    DpInputDirective,
+    DpInputComponent,
+    DataEditComponent,
+    DataNewComponent,
+    FadeOutDirective,
+    DpDividerComponent,
+    DpFileComponent,
   ],
-  imports: [
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    BrowserModule,
-    AppRoutingModule,
-    AngularFireAuthModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    HttpClientModule,
-    MatCardModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule
-  ],
+    imports: [
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule,
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
+        BrowserModule,
+        AppRoutingModule,
+        AngularFireAuthModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        HttpClientModule,
+        MatCardModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatChipsModule,
+        MatProgressBarModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        MatGridListModule,
+        CKEditorModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

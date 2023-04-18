@@ -1,0 +1,21 @@
+<div class="component-main">
+  <div class="component-header" FadeOut @fadeInFromTop>
+    <h3 class="component-h">My Data</h3>
+
+    <div class="component-operation-container">
+      <DPButton icon="add"
+                (click)="global.goTo('my-data/new')"
+                appearance="success" style="margin-right: 6px">New</DPButton>
+      <DPInput icon="search" (valueChange)="search($event)">Search</DPInput>
+    </div>
+
+    <div>
+    </div>
+    <mat-progress-bar *ngIf="isLoading && (animationService.leaveAnimation !== 'fade')"
+                      class="component-progress-indicator" mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <DPDivider></DPDivider>
+
+</div>
+

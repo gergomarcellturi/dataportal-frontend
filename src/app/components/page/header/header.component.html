@@ -1,0 +1,44 @@
+<mat-toolbar color="primary" class="noselect">
+  <div class="option-group">
+    <button class="header-option">
+      <span class="header-label" (click)="global.goTo('')">Data Portal</span>
+    </button>
+
+  </div>
+
+  <ng-container *ngIf="auth.authState | async">
+    <div class="option-group">
+      <button class="header-option"  (click)="global.goTo('explore')">
+        <span class="header-icon"><mat-icon [inline]="true">search</mat-icon></span>
+        <span class="header-label">Search</span>
+      </button>
+
+
+      <button class="header-option"  (click)="global.goTo('articles')">
+        <span class="header-icon"><mat-icon [inline]="true">article</mat-icon></span>
+        <span class="header-label">Articles</span>
+      </button>
+    </div>
+
+
+    <div class="option-group">
+      <button class="header-option"  (click)="global.goTo('profile')">
+        <span class="header-icon"><mat-icon [inline]="true">person</mat-icon></span>
+        <span class="header-label">Profile</span>
+      </button>
+
+      <button class="header-option" (click)="global.goTo('my-data')">
+        <span class="header-icon"><mat-icon [inline]="true">storage</mat-icon></span>
+        <span class="header-label">My Data</span>
+      </button>
+
+      <button class="header-option" (click)="logoutClick()">
+        <span class="header-icon"><mat-icon [inline]="true">logout</mat-icon></span>
+        <span class="header-label">Log Out</span>
+      </button>
+    </div>
+  </ng-container>
+
+
+
+</mat-toolbar>

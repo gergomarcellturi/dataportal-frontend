@@ -13,6 +13,7 @@ export const environment = {
     measurementId: 'G-HJQ8WP8965',
   },
   backendRoot: 'http://localhost:8080',
+  storageRoot: 'http://localhost:8090',
   production: false
 };
 

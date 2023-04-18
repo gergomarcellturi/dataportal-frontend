@@ -1,0 +1,40 @@
+.input-box {
+  position: relative;
+}
+
+.input-box input {
+  outline: none;
+  background: transparent;
+  border: solid 2px var(--bg-color-faded);
+  border-radius: 5px;
+  padding: 3px;
+  transition: .2s;
+  color: var(--bg-color);
+}
+
+.input-box span {
+  position: absolute;
+  left: 8px;
+  top: 2px;
+  transition: .2s;
+  /*width: 0;*/
+  /*height: 0;*/
+}
+
+.input-box input:focus {
+  border-color: var(--primary-color);
+}
+
+.input-box input:valid ~ span, .input-box input:focus ~ span {
+  transform: translateX(4px) translateY(-14px);
+  background-color: var(--bg-color-faded);
+  font-size: x-small;
+  padding: 0 4px;
+  color: aliceblue;
+  font-weight: bold;
+  border-radius: 3px 3px 0 0;
+}
+
+.input-box input:focus ~ span {
+  background-color: var(--primary-color);
+}

@@ -21,10 +21,6 @@
   margin-top: 20px;
 }
 
-.full-width {
-  width: 100%;
-}
-
 button[mat-raised-button] {
   margin-top: 20px;
   width: 100%;

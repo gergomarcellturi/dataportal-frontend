@@ -1,0 +1,13 @@
+/deep/ .published.mat-button-toggle-checked {
+  background-color: var(--secondary-color);
+  color: aliceblue;
+}
+
+/deep/ .hidden.mat-button-toggle-checked {
+  background-color: var(--warn-color);
+  color: aliceblue;
+}
+/deep/ .ready.mat-button-toggle-checked {
+  background-color: var(--danger-color) !important;
+  color: aliceblue;
+}

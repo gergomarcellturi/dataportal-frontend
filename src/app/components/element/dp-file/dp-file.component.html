@@ -1,13 +1,13 @@
 <div class="file-container noselect"
-     [class.confirmed]="confirmed && file"
-     [class.unconfirmed]="!confirmed && file"
-     [class.upload]="!file" [class.download]="!!file">
+     [class.confirmed]="confirmed && metadata"
+     [class.unconfirmed]="!confirmed && metadata"
+     [class.upload]="!metadata" [class.download]="!!metadata">
 
-  <div class="side" [class.left-side]="!!file">
+  <div class="side" [class.left-side]="!!metadata">
 
-    <div class="file-info"  *ngIf="file">
-      <p class="file-name" [hidden]="!fileName">{{fileName}}</p>
-      <p class="file-size" [hidden]="!fileSize">{{fileTypeString}} | {{fileSize}}</p>
+    <div class="file-info"  *ngIf="metadata">
+      <p class="file-name" [hidden]="!metadata.filename">{{metadata.filename}}</p>
+      <p class="file-size" [hidden]="!metadata.size">{{metadata.type}} | {{fileSizeString}}</p>
     </div>
 
     <div class="progress-feedback" *ngIf="uploadStatus !== 'NONE'">
@@ -25,15 +25,16 @@
   </div>
 
   <div class="side">
-    <div class="vertical-divider-file" *ngIf="file"></div>
+    <div class="vertical-divider-file" *ngIf="metadata"></div>
 
     <div>
-      <DPButton [matTooltip]="'Download'" *ngIf="(file && !disableDownload) && confirmed && !isLoading"
+      <DPButton [matTooltip]="'Download'" *ngIf="(metadata && !disableDownload) && confirmed && !isLoading"
                 [borderless]="true"
+                (click)="download()"
                 style="margin-left: 3px; margin-right: 3px"
                 icon="download" appearance="success"></DPButton>
 
-      <DPButton [matTooltip]="'Confirm'" *ngIf="file && !confirmed && !isLoading"
+      <DPButton [matTooltip]="'Confirm'" *ngIf="metadata && !confirmed && !isLoading"
                 [borderless]="true"
                 (click)="confirm()"
                 style="margin-left: 3px; margin-right: 3px"
@@ -42,10 +43,10 @@
       <DPButton [borderless]="true"
                 [matTooltip]="'Clear'"
                 (click)="clear(fileInput)"
-                *ngIf="file && !isLoading" icon="clear" appearance="danger"></DPButton>
+                *ngIf="metadata && !isLoading && clearable" icon="clear" appearance="danger"></DPButton>
 
       <DPButton (click)="fileInput.click()"
-                *ngIf="!file && !isLoading" appearance="secondary" icon="{{icon}}">
+                *ngIf="!metadata && !isLoading" appearance="secondary" icon="{{icon}}">
         <ng-content></ng-content>
       </DPButton>
 

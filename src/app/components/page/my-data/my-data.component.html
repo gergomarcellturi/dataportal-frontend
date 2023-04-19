@@ -1,7 +1,9 @@
 <div class="component-main">
   <div class="component-header" FadeOut @fadeInFromTop>
-    <h3 class="component-h">My Data</h3>
-
+    <h3 class="component-h" (click)="global.goTo('')">
+      <mat-icon class="back-icon">navigate_before</mat-icon>
+      My Data
+    </h3>
     <div class="component-operation-container">
       <DPButton icon="add"
                 (click)="global.goTo('my-data/new')"
@@ -16,6 +18,23 @@
   </div>
 
   <DPDivider></DPDivider>
+
+  <div *ngIf="$metadataPreviews | async as metadataPreviews"
+    FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+    <div class="inner-content">
+
+      <div *ngFor="let preview of metadataPreviews.filter(previewFilter)" style="margin: 1rem 0">
+        <DPPreviewCard
+          [deleteEnabled]="false"
+          (onClick)="click($event)"
+          (onDelete)="delete($event)"
+          (onEdit)="global.goTo('my-data/edit', $event.uid)"
+          [preview]="preview"></DPPreviewCard>
+      </div>
+
+    </div>
+  </div>
+
 
 </div>
 

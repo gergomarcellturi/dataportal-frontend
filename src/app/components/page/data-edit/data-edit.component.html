@@ -1,1 +1,107 @@
-<p>data-edit works!</p>
+<div class="component-main">
+
+
+  <div class="component-header" FadeOut [@fadeOutOnLeave] @fadeInFromTop>
+    <h3 class="component-h" (click)="global.goTo('my-data')">
+      <mat-icon class="back-icon">navigate_before</mat-icon>
+      Edit Data
+    </h3>
+    <div>
+    </div>
+    <mat-progress-bar
+      [class.invisible]="!isLoading"
+      class="component-progress-indicator"
+      mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <ng-container *ngIf="metadata && datasourceDetails">
+
+    <DPDivider></DPDivider>
+
+    <div FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+      <div class="full-width">
+        <DPFile
+          [metadata]="metadata"
+          [disableDownload]="false"
+          [clearable]="false"
+          icon="note_add">
+          Select File
+        </DPFile>
+      </div>
+    </div>
+
+
+    <div
+      FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+      <div class="inner-content">
+
+        <mat-form-field appearance="fill" style="width: 100%">
+          <mat-label>Datasource name *</mat-label>
+          <input matInput [(ngModel)]="datasourceDetails!.title">
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%" appearance="fill">
+          <mat-label>Tags</mat-label>
+          <mat-chip-list #chipList aria-label="Tags">
+            <mat-chip *ngFor="let tag of datasourceDetails!.tags; let i = index" (removed)="remove(tag)">
+              {{i + 1}}. {{tag.title}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input placeholder="New fruit..."
+                   [matChipInputFor]="chipList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="addOnBlur"
+                   (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" style="width: 100%">
+          <mat-label>Summary</mat-label>
+          <textarea [(ngModel)]="datasourceDetails!.summary" matInput style="height: 100px"></textarea>
+        </mat-form-field>
+
+        <ckeditor [editor]="EditorClassic"
+                  [config]="ckeditorConfig"
+                  [(ngModel)]="datasourceDetails!.description"></ckeditor>
+
+      </div>
+    </div>
+
+    <div
+      FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+      <div class="inner-content">
+        <div>
+          <mat-button-toggle-group [(ngModel)]="metadata!.status">
+            <mat-button-toggle [value]="DataSourceStatus.READY"
+                               class="ready"
+                               *ngIf="metadata.status === DataSourceStatus.READY">
+              <mat-icon>grade</mat-icon>
+              Ready
+            </mat-button-toggle>
+            <mat-button-toggle class="hidden" [value]="DataSourceStatus.HIDDEN">
+              <mat-icon>visibility_off</mat-icon>
+              Hidden
+            </mat-button-toggle>
+            <mat-button-toggle class="published" [value]="DataSourceStatus.PUBLISHED">
+              <mat-icon>check_circle</mat-icon>
+              Published
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="metadata" FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+      <div class="inner-content" style="flex-direction: row; justify-content: flex-end">
+        <DPButton (click)="delete()" icon="delete" appearance="danger">Delete</DPButton>
+        <DPButton (click)="save()" [disabled]="!datasourceDetails!.title" icon="save" appearance="success"
+                  style="margin-left: 6px">Save
+        </DPButton>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+

@@ -1,0 +1,55 @@
+<div class="preview-container noselect" (click)="click()">
+
+  <div class="visibility-container" *ngIf="preview.status !== DataSourceStatus.PUBLISHED">
+    <mat-icon
+      [matTooltip]="'Hidden'" style="
+      color: var(--danger-color);
+       text-shadow: 0 0 12px var(--danger-color);
+       font-size: 24px">visibility_off</mat-icon>
+  </div>
+
+  <div class="action-container" *ngIf="auth.portalUser && preview.userUid === auth.portalUser.uid">
+    <mat-icon
+      *ngIf="editEnabled"
+      [matTooltip]="'Edit'"
+      matTooltipPosition="right"
+      (click)="$event.stopPropagation(); $event.preventDefault(); editClick()"
+      [inline]="true" style="color: var(--secondary-color); margin-bottom: 8px;">create</mat-icon>
+    <mat-icon
+      *ngIf="deleteEnabled"
+      [matTooltip]="'Delete'"
+      matTooltipPosition="right"
+      (click)="$event.stopPropagation(); $event.preventDefault(); deleteClick()"
+      [inline]="true" style="color: var(--danger-color); margin-bottom: 8px;">delete</mat-icon>
+  </div>
+
+  <div class="logo-container"
+       [class.json]="preview.type === FileType.JSON"
+       [class.xml]="preview.type === FileType.XML"
+       [class.csv]="preview.type === FileType.CSV"
+  >
+    <span class="logo-text">{{preview.type}}</span>
+  </div>
+
+  <div class="info-container">
+    <div class="upper-container">
+      <div class="title-container">
+        {{preview.title}}
+      </div>
+      <div class="info">
+        <span>{{fileSizeString}}</span>
+      </div>
+    </div>
+
+    <div class="card-divider"></div>
+
+    <div class="summary-container">
+      <span>
+        {{preview.summary}}
+      </span>
+
+    </div>
+
+  </div>
+
+</div>

@@ -15,6 +15,10 @@ import {Metadata} from "../../../model/storage/Metadata";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
+import {DatasourceDetails} from "../../../model/storage/DatasourceDetails";
+import {Tag} from "../../../model/storage/Tag";
+import {GlobalService} from "../../../services/global.service";
+import {ckeditorConfig} from "../../../consts/misc";
 
 @Component({
   selector: 'app-data-new',
@@ -28,20 +32,23 @@ export class DataNewComponent implements OnInit, OnDestroy {
   set fadeOutOnLeaveAnimation(query: QueryList<ElementRef<HTMLDivElement>>) {
     this.animationService.add(query, this);
   }
+  public EditorClassic = ClassicEditor;
+  public ckeditorConfig = ckeditorConfig;
   public metadata?: Metadata;
   public isLoading = false;
-  public EditorClassic = ClassicEditor;
-  public content?: string;
-  public name?: string;
+  public description?: string;
+  public title?: string;
+  public summary?: string;
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  fruits: {name: string}[] = [{name: 'Lemon'}, {name: 'Lime'}, {name: 'Apple'}];
+  tags: Tag[] = [];
 
   constructor(
     public animationService: AnimationService,
     public portalApiService: PortalApiService,
     public dataApiService: DataApiService,
+    public global: GlobalService,
   ) {
   }
 
@@ -54,43 +61,39 @@ export class DataNewComponent implements OnInit, OnDestroy {
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-
-    // Add our fruit
     if (value) {
-      this.fruits.push({name: value});
+      this.tags.push({title: value} as Tag);
     }
-
-    // Clear the input value
     event.chipInput!.clear();
   }
 
-  remove(fruit: {name: string}): void {
-    const index = this.fruits.indexOf(fruit);
+  remove(tag: Tag): void {
+    const index = this.tags.indexOf(tag);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.tags.splice(index, 1);
     }
   }
-
-  edit(fruit: {name: string}, event: MatChipEditedEvent) {
-    const value = event.value.trim();
-
-    // Remove fruit if it no longer has a name
-    if (!value) {
-      this.remove(fruit);
-      return;
-    }
-
-    // Edit existing fruit
-    const index = this.fruits.indexOf(fruit);
-    if (index >= 0) {
-      this.fruits[index].name = value;
-    }
-  }
-
-  metadataChange = (metadata: Metadata | null) => {
+  onUploaded = (metadata: Metadata | null) => {
     if (metadata) this.metadata = metadata;
     else this.metadata = undefined;
+  }
+
+  public save = () => {
+    if (!this.title || !this.metadata) return;
+
+    this.dataApiService.finalizeData({metadataId: this.metadata.uid}, {
+      title: this.title,
+      summary: this.summary,
+      description: this.description,
+      tags: this.tags,
+    } as DatasourceDetails).subscribe(response => {
+      const {data} = response;
+      if (data) {
+        this.metadata = data;
+        this.global.goTo(`my-data/edit`, this.metadata.uid);
+      }
+    })
   }
 
 }

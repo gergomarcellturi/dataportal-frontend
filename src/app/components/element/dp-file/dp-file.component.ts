@@ -1,5 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {getFileSizeString, getFileType, getFileTypeString} from "../../../consts/misc";
+import {
+  getFileSizeStringFromFile,
+  getFileSizeStringFromSize,
+  getFileType,
+  getFileTypeString
+} from "../../../consts/misc";
 import {FileType} from "../../../model/enum/FileType";
 import {LoadProgress} from "../../../model/common/LoadProgress";
 import {DataApiService} from "../../../services/api/data-api.service";
@@ -20,6 +25,8 @@ export class DpFileComponent implements OnInit {
   @Input() public disableDownload = false;
   @Input() public confirmationRequired = false;
   @Input() public icon = 'upload';
+  @Input() public clearable = true;
+  @Input() public metadata?: Metadata;
   @Output() public fileChange: EventEmitter<File | undefined> = new EventEmitter<File | undefined>();
   @Output() public onConfirm: EventEmitter<File> = new EventEmitter<File>();
   @Output() public onClear: EventEmitter<void> = new EventEmitter<void>();
@@ -33,10 +40,10 @@ export class DpFileComponent implements OnInit {
   public loadingProgress: number | null = 0;
   public confirmed = false;
   public fileName = '';
-  public fileSize = '';
+  public fileSizeString = '';
   public fileTypeString = '';
-  public metadata?: Metadata;
   public fileType?: FileType;
+  private canUpload = false;
   constructor(
     public dataApiService: DataApiService,
     public store: AngularFirestore,
@@ -52,8 +59,17 @@ export class DpFileComponent implements OnInit {
     });
     this.onMetadataChange.subscribe(() => {
       if (!this.metadata) return;
-      if (!this.confirmationRequired) this.initUpload();
+      if (!this.confirmationRequired && this.canUpload) this.initUpload();
+      this.fileSizeString = getFileSizeStringFromSize(this.metadata.size);
     })
+
+    if (this.metadata) this.onMetadataChange.emit(this.metadata);
+    this.canUpload = true;
+  }
+
+  public download = (): void => {
+    if (!this.metadata?.uid) return;
+    this.dataApiService.downloadFile(this.metadata?.uid);
   }
 
   public confirm = () => {
@@ -88,11 +104,11 @@ export class DpFileComponent implements OnInit {
 
   public updateFileDetails = (file: File | undefined): void => {
     if (file) {
-      this.fileSize = getFileSizeString(file);
+      this.fileSizeString = getFileSizeStringFromFile(file);
       this.fileName = file.name
       this.fileTypeString = getFileTypeString(file)!;
     } else {
-      this.fileSize = '';
+      this.fileSizeString = '';
       this.fileName = '';
       this.fileTypeString = ';'
     }
@@ -147,6 +163,7 @@ export class DpFileComponent implements OnInit {
             case "FINISHED":
               this.isLoading = false;
               this.loadingProgress = 100;
+              this.onUploaded.emit(this.metadata);
               monitor.unsubscribe();
               setTimeout(() => {
                 this.uploadStatus = 'NONE';

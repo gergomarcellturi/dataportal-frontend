@@ -1,0 +1,12 @@
+<mat-dialog-content style="position: relative">
+  <p>
+    {{data.message}}
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div style="display: flex; flex-direction: row; justify-content: flex-end; width: 100%">
+    <DPButton icon="clear" [mat-dialog-close]="false" appearance="danger">Cancel</DPButton>
+    <DPButton icon="done" [mat-dialog-close]="true" style="margin-left: 6px" appearance="success">Ok</DPButton>
+  </div>
+
+</mat-dialog-actions>

@@ -35,9 +35,9 @@ export const getFileTypeString = (file: File): string | undefined => {
   return fileType?.toUpperCase()
 }
 
-export const getFileSizeString = (file: File): string => {
+const units = ["B", "KB", "MB", "GB", "TB"];
+export const getFileSizeStringFromFile = (file: File): string => {
   let fileSizeInBytes = file.size;
-  const units = ["B", "KB", "MB", "GB", "TB"];
 
   let i = 0;
   while (fileSizeInBytes >= 1024 && i < units.length - 1) {
@@ -47,3 +47,86 @@ export const getFileSizeString = (file: File): string => {
 
   return fileSizeInBytes.toFixed(2) + " " + units[i];
 }
+
+export const getFileSizeStringFromSize = (fileSizeInBytes: number): string => {
+  let i = 0;
+  while (fileSizeInBytes >= 1024 && i < units.length - 1) {
+    fileSizeInBytes /= 1024;
+    i++;
+  }
+
+  return fileSizeInBytes.toFixed(2) + " " + units[i];
+}
+
+export const ckeditorConfig: any = {
+  toolbar: {
+    items: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      'underline',
+      'strikethrough',
+      'subscript',
+      'superscript',
+      '|',
+      'bulletedList',
+      'numberedList',
+      '|',
+      'alignment',
+      '|',
+      'indent',
+      'outdent',
+      '|',
+      'link',
+      'unlink',
+      '|',
+      'blockQuote',
+      'insertTable',
+      'mediaEmbed',
+      '|',
+      'undo',
+      'redo',
+      '|',
+      'code',
+      'codeBlock',
+      '|',
+      'removeFormat',
+      '|',
+      'horizontalLine',
+      'specialCharacters',
+      'pageBreak',
+    ],
+  },
+  image: {
+    toolbar: [
+      'imageTextAlternative',
+      '|',
+      'imageStyle:alignLeft',
+      'imageStyle:full',
+      'imageStyle:alignRight',
+      'imageStyle:alignCenter',
+      '|',
+      'linkImage',
+    ],
+    styles: [
+      'full',
+      'alignLeft',
+      'alignRight',
+      'alignCenter',
+    ],
+  },
+  table: {
+    contentToolbar: [
+      'tableColumn',
+      'tableRow',
+      'mergeTableCells',
+      'tableCellProperties',
+      'tableProperties',
+    ],
+  },
+  mediaEmbed: {
+    previewsInData: true,
+  },
+};
+

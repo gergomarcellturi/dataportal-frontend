@@ -17,7 +17,8 @@
     <div class="upload-container">
       <DPFile  [disableDownload]="true"
                [confirmationRequired]="true"
-               (onMetadataChange)="metadataChange($event)"
+               (onUploaded)="onUploaded($event)"
+               (onClear)="metadata = undefined"
                icon="note_add">
         Select File
       </DPFile>
@@ -29,64 +30,44 @@
   <div
     FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
     <div class="inner-content">
-      <mat-grid-list [cols]="32" rowHeight="80px" style="width: 100%">
 
-        <mat-grid-tile colspan="15">
-          <mat-form-field appearance="fill" style="width: 100%">
-            <mat-label>Datasource name *</mat-label>
-            <input matInput [(ngModel)]="name">
-          </mat-form-field>
-        </mat-grid-tile>
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Datasource name *</mat-label>
+        <input matInput [(ngModel)]="title">
+      </mat-form-field>
 
-        <mat-grid-tile colspan="2">
-
-        </mat-grid-tile>
-
-        <mat-grid-tile colspan="15">
-
-
-          <mat-form-field class="example-chip-list" appearance="fill">
-            <mat-label>Favorite Fruits</mat-label>
-            <mat-chip-grid #chipGrid aria-label="Enter fruits">
-              <mat-chip-row *ngFor="let fruit of fruits"
-                            (removed)="remove(fruit)"
-                            [editable]="true"
-                            (edited)="edit(fruit, $event)"
-                            [aria-description]="'press enter to edit ' + fruit.name">
-                {{fruit.name}}
-                <button matChipRemove [attr.aria-label]="'remove ' + fruit.name">
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip-row>
-              <input placeholder="New fruit..."
-                     [matChipInputFor]="chipGrid"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="addOnBlur"
-                     (matChipInputTokenEnd)="add($event)"/>
-            </mat-chip-grid>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill" style="width: 100%">
-            <mat-label>Tags</mat-label>
-            <input matInput>
-          </mat-form-field>
-        </mat-grid-tile>
-
-      </mat-grid-list>
+      <mat-form-field style="width: 100%" appearance="fill">
+        <mat-label>Tags</mat-label>
+        <mat-chip-list #chipList aria-label="Tags">
+          <mat-chip *ngFor="let tag of tags; let i = index" (removed)="remove(tag)">
+            {{i + 1}}. {{tag.title}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input placeholder="New fruit..."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
 
       <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Summary</mat-label>
-        <textarea matInput style="height: 100px"></textarea>
+        <textarea [(ngModel)]="summary" matInput style="height: 100px"></textarea>
       </mat-form-field>
 
-      <ckeditor [editor]="EditorClassic" [(ngModel)]="content"></ckeditor>
+      <ckeditor [editor]="EditorClassic"
+                [config]="ckeditorConfig"
+                [(ngModel)]="description"></ckeditor>
 
     </div>
   </div>
 
-  <div FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+  <div *ngIf="metadata" FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
     <div class="inner-content">
-      <DPButton [disabled]="" icon="save" appearance="success" style="margin-left: auto">Save</DPButton>
+      <DPButton (click)="save()" [disabled]="!title" icon="save" appearance="success" style="margin-left: auto">Save</DPButton>
     </div>
   </div>
 

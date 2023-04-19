@@ -7,9 +7,3 @@
   height: 2px;
   border-radius: 1px;
 }
-
-.inner-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}

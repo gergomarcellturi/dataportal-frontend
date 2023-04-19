@@ -37,6 +37,13 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {MatChipsModule} from "@angular/material/chips";
+import { DataViewComponent } from './components/page/data-view/data-view.component';
+import { ExploreComponent } from './components/page/explore/explore.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import { DpPreviewCardComponent } from './components/element/dp-preview-card/dp-preview-card.component';
+import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {SafeHtmlPipe} from "./pipes/safe-html.pipe";
 
 @NgModule({
   declarations: [
@@ -53,6 +60,11 @@ import {MatChipsModule} from "@angular/material/chips";
     FadeOutDirective,
     DpDividerComponent,
     DpFileComponent,
+    DataViewComponent,
+    ExploreComponent,
+    DpPreviewCardComponent,
+    ConfirmationDialogComponent,
+    SafeHtmlPipe,
   ],
     imports: [
         AngularFireModule.initializeApp(environment.firebase),
@@ -78,7 +90,9 @@ import {MatChipsModule} from "@angular/material/chips";
         MatTooltipModule,
         MatProgressSpinnerModule,
         MatGridListModule,
-        CKEditorModule
+        CKEditorModule,
+        MatButtonToggleModule,
+        MatDialogModule
     ],
   providers: [
     {

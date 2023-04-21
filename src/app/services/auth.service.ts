@@ -12,9 +12,11 @@ import firebase from "firebase/compat/app";
 export class AuthService {
 
   public firebaseUser?: firebase.User | null;
+  public userApiKey?: string;
   public portalUser?: User
   // @ts-ignore
   public $portalUser: BehaviorSubject<User | undefined> = new BehaviorSubject(undefined);
+  public $userApiKey: BehaviorSubject<string> = new BehaviorSubject('');
   constructor(
     private authApi: AuthApiService,
     private afAuth: AngularFireAuth,
@@ -22,18 +24,27 @@ export class AuthService {
     this.$portalUser.subscribe(user => {
       this.portalUser = user;
     })
+    this.$userApiKey.subscribe(key => {
+      this.userApiKey = key;
+    });
     this.afAuth.authState.pipe(
       map(value => {
         if (value?.uid) {
-          this.authApi.login().subscribe();
-          const sub = this.authApi.getCurrentUser().subscribe(user => {
-            this.$portalUser.next(user);
-            sub.unsubscribe();
-          })
+          const sub1 = this.authApi.getCurrentUser().subscribe(user => {
+            if (!this.portalUser || user.uid !== this.portalUser.uid)
+              this.$portalUser.next(user);
+            this.authApi.login().subscribe();
+            const sub2 = this.authApi.getCurrentApiKey().subscribe(key => {
+              if (key) this.$userApiKey.next(key);
+              sub2.unsubscribe();
+            })
+            sub1.unsubscribe();
+          });
         } else {
           if (this.firebaseUser) {
             this.authApi.logout(this.firebaseUser.uid).subscribe();
             this.portalUser = undefined;
+            this.userApiKey = undefined;
           }
         }
         this.firebaseUser = value;

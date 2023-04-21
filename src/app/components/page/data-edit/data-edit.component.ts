@@ -14,6 +14,8 @@ import {AnimationService} from "../../../services/animation.service";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {DataSourceStatus} from "../../../model/enum/DataSourceStatus";
 import {ckeditorConfig} from "../../../consts/misc";
+import {DataAccess} from "../../../model/enum/DataAccess";
+import {DataDownloadAccess} from "../../../model/enum/DataDownloadAccess";
 
 @Component({
   selector: 'app-data-edit',
@@ -27,6 +29,8 @@ export class DataEditComponent implements OnInit, AfterViewInit {
     this.animationService.add(query, this);
   }
   public DataSourceStatus = DataSourceStatus;
+  public DataAccess = DataAccess;
+  public DataDownloadAccess = DataDownloadAccess;
   public EditorClassic = ClassicEditor;
   public metadata?: Metadata;
   public datasourceDetails?: DatasourceDetails;
@@ -66,6 +70,7 @@ export class DataEditComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.animationService.destroy(this);
   }
 
   add(event: MatChipInputEvent): void {

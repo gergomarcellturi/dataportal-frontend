@@ -73,6 +73,7 @@
       FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
       <div class="inner-content">
         <div>
+          <p>Visibility</p>
           <mat-button-toggle-group [(ngModel)]="metadata!.status">
             <mat-button-toggle [value]="DataSourceStatus.READY"
                                class="ready"
@@ -90,6 +91,45 @@
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>
+
+
+
+        <div>
+          <p>API Access</p>
+          <mat-button-toggle-group [(ngModel)]="metadata!.dataAccess">
+            <mat-button-toggle [value]="DataAccess.PUBLIC">
+              <mat-icon>public</mat-icon>
+              Open
+            </mat-button-toggle>
+            <mat-button-toggle [value]="DataAccess.PUBLIC">
+              <mat-icon>lock_open</mat-icon>
+              Public
+            </mat-button-toggle>
+            <mat-button-toggle [value]="DataAccess.REQUEST">
+              <mat-icon>key</mat-icon>
+              By Request
+            </mat-button-toggle>
+            <mat-button-toggle [value]="DataAccess.PRIVATE">
+              <mat-icon>lock</mat-icon>
+              Private
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+
+        <div>
+          <p>Download Access</p>
+          <mat-button-toggle-group [(ngModel)]="metadata!.dataDownloadAccess">
+            <mat-button-toggle [value]="DataDownloadAccess.PUBLIC">
+              <mat-icon>public</mat-icon>
+              Public
+            </mat-button-toggle>
+            <mat-button-toggle [value]="DataDownloadAccess.DISABLED">
+              <mat-icon>lock</mat-icon>
+              Private
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+
       </div>
     </div>
 

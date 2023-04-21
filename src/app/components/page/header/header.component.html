@@ -1,12 +1,13 @@
 <mat-toolbar color="primary" class="noselect">
   <div class="option-group">
     <button class="header-option">
-      <span class="header-label" (click)="global.goTo('')">Data Portal</span>
+      <span class="header-label"
+            (click)="global.home()">Data Portal</span>
     </button>
 
   </div>
 
-  <ng-container *ngIf="auth.authState | async">
+  <ng-container *ngIf="auth.authState | async; else logout">
     <div class="option-group">
       <button class="header-option"  (click)="global.goTo('explore')">
         <span class="header-icon"><mat-icon [inline]="true">search</mat-icon></span>
@@ -38,6 +39,15 @@
       </button>
     </div>
   </ng-container>
+
+  <ng-template #logout>
+    <div class="option-group">
+      <button class="header-option" (click)="global.goTo('login')">
+        <span class="header-icon"><mat-icon [inline]="true">login</mat-icon></span>
+        <span class="header-label">Log In</span>
+      </button>
+    </div>
+  </ng-template>
 
 
 

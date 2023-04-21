@@ -8,10 +8,14 @@ import {DataNewComponent} from "./components/page/data-new/data-new.component";
 import {DataEditComponent} from "./components/page/data-edit/data-edit.component";
 import {ExploreComponent} from "./components/page/explore/explore.component";
 import {DataViewComponent} from "./components/page/data-view/data-view.component";
+import {ProfileComponent} from "./components/page/profile/profile.component";
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'view', component: ExploreComponent},
+  { path: 'explore', component: ExploreComponent},
+  { path: 'profile', component: ProfileComponent},
+  { path: 'profile/:uid', component: ProfileComponent},
+  { path: 'view', redirectTo: 'explore'},
   { path: 'view/:uid', component: DataViewComponent},
   { path: 'my-data', component: MyDataComponent, canActivate: [AuthGuard] },
   { path: 'my-data/new', component: DataNewComponent, canActivate: [AuthGuard]},

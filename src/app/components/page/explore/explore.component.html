@@ -1,1 +1,38 @@
-<p>browse works!</p>
+<div class="component-main">
+
+
+  <div class="component-header" FadeOut [@fadeOutOnLeave] @fadeInFromTop>
+    <h3 class="component-h">
+      Explore
+    </h3>
+    <mat-progress-bar
+      [class.invisible]="!isLoading"
+      class="component-progress-indicator"
+      mode="indeterminate"></mat-progress-bar>
+
+  </div>
+  <DPDivider></DPDivider>
+
+    <div
+      FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+      <div class="inner-content" style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 48px">
+        <div class="explore-item-container" style="min-width: 250px" *ngFor="let preview of exploreItems">
+          <DPPreviewCard [deleteEnabled]="false" [preview]="preview"></DPPreviewCard>
+        </div>
+      </div>
+    </div>
+
+    <div FadeOut [@fadeOutOnLeave] @fadeInFromTop class="full-width" style="display: flex; flex-direction: row; justify-content: center">
+      <DPButton *ngIf="exploreItems.length >= limit; else noMore" icon="expand_more" appearance="info"
+                (click)="expand()">Load More</DPButton>
+
+      <ng-template #noMore>
+        <DPButton icon="lock" [disabled]="true">
+          {{isLoading ? 'Loading...' : 'No more datasources found'}}
+        </DPButton>
+      </ng-template>
+    </div>
+
+</div>
+
+

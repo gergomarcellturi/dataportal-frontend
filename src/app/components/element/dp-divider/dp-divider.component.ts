@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AnimationService} from "../../../services/animation.service";
 import {dividerFade} from "../../../consts/animations";
 
@@ -8,7 +8,7 @@ import {dividerFade} from "../../../consts/animations";
   styleUrls: ['./dp-divider.component.css'],
   animations: [dividerFade]
 })
-export class DpDividerComponent implements OnInit {
+export class DpDividerComponent implements OnInit, OnDestroy {
   constructor(
     public animationService: AnimationService,
     private cd: ChangeDetectorRef
@@ -21,5 +21,7 @@ export class DpDividerComponent implements OnInit {
       this.refreshView();
     })
   }
-
+  ngOnDestroy() {
+    this.animationService.destroy(this);
+  }
 }

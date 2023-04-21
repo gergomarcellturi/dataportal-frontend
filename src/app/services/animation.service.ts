@@ -13,8 +13,8 @@ export class AnimationService {
   private elementNums: {compId: number, length: number}[] = [];
 
   public get delay() {
-    return this.elementNums.reduce((acc, val) =>
-      acc += val.length , 0) * 150 + 600;
+    return Math.min(this.elementNums.reduce((acc, val) =>
+      acc += val.length , 0) * 150 + 600, 1500);
   }
 
   constructor(

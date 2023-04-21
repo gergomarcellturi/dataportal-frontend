@@ -1,6 +1,8 @@
 import {BaseModel} from "../BaseModel";
 import {FileType} from "../enum/FileType";
 import {DataSourceStatus} from "../enum/DataSourceStatus";
+import { DataDownloadAccess } from "../enum/DataDownloadAccess";
+import {DataAccess} from "../enum/DataAccess";
 
 export type Metadata = BaseModel & {
   userUid: string;
@@ -10,4 +12,6 @@ export type Metadata = BaseModel & {
   status: DataSourceStatus;
   datePublished: Date;
   dateDeleted: Date;
+  dataDownloadAccess: DataDownloadAccess;
+  dataAccess: DataAccess;
 }

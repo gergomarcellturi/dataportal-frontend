@@ -37,7 +37,29 @@
                   (click)="global.goTo('my-data/edit', metadata.uid)"
                   icon="edit" appearance="secondary">Edit</DPButton>
 
+        <DPButton icon="link" *ngIf="canAccess"
+                  [appearance]="showApi ? 'warning' : 'success'"
+                  (click)="showApi = !showApi">
+          {{showApi ?  'Hide Api' : 'Show API'}}
+        </DPButton>
+
+        <DPButton icon="key" (click)="requestAccess(metadata)"
+                  *ngIf="(!canAccess && metadata.dataAccess === DataAccess.REQUEST)
+                   && !alreadyRequested">
+          Request Access
+        </DPButton>
+
+        <span *ngIf="alreadyRequested && !canAccess">Access Requested</span>
+
       </div>
+
+      <div class="inner-content link-container" *ngIf="showApi" @fadeInFromTop>
+        <div class="label">Full File</div>
+        <div class="link-element"><span class="link-text">GET | {{apiLink}}</span> <div class="copy-icon-container" [matTooltip]="'Copy'" [matTooltipPosition]="'right'" (click)="copy(apiLink)"><mat-icon>content_copy</mat-icon></div></div>
+        <div class="label">Segmented</div>
+        <div class="link-element"><span class="link-text">GET | {{apiSegmentedLink}}</span> <div class="copy-icon-container" [matTooltip]="'Copy'" [matTooltipPosition]="'right'" (click)="copy(apiSegmentedLink)"><mat-icon>content_copy</mat-icon></div></div>
+      </div>
+
 
     </div>
   </div>
@@ -60,7 +82,7 @@
       <div class="full-width">
         <DPFile
           [metadata]="metadata"
-          [disableDownload]="false"
+          [disableDownload]="metadata.dataDownloadAccess === DataDownloadAccess.DISABLED"
           [clearable]="false"
           icon="note_add">
           Select File

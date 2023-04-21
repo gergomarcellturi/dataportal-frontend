@@ -1,4 +1,4 @@
-import firebase from "firebase/compat";
+import firebase from 'firebase/compat/app';
 import Timestamp = firebase.firestore.Timestamp;
 import {DataSourceStatus} from "../enum/DataSourceStatus";
 import {Tag} from "../storage/Tag";

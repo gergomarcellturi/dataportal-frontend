@@ -26,4 +26,7 @@ export class AuthApiService extends BaseApiService<string> {
   public getCurrentUser = (): Observable<User> => {
     return this.call(HTTP.GET, `current`) as unknown as Observable<User>;
   }
+  public getCurrentApiKey = (): Observable<string | undefined> => {
+    return this.call(HTTP.GET, `current/key`);
+  }
 }

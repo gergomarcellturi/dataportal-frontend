@@ -19,6 +19,61 @@
   /*border-radius: 6px;*/
 }
 
+.actions DPButton {
+  margin-left: 8px;
+}
+
+.inner-content {
+  margin: 1rem 0;
+
+}
+
+.link-container {
+  /*background-color: var(--bg-color-faded);*/
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.link-element {
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 4px;
+  background-color: aliceblue;
+  /*margin-bottom: 8px;*/
+  border: solid 2px var(--bg-color-faded);
+}
+
+.label {
+  font-weight: lighter;
+}
+
+.link-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: lighter;
+  color: rgba(0,0,0,.82);
+  font-style: italic;
+}
+
+.copy-icon-container {
+  padding-left: 6px;
+  color: var(--secondary-color);
+  transition: .2s;
+}
+
+.copy-icon-container:hover {
+  transform: scale(1.10);
+  cursor: pointer;
+}
+.copy-icon-container:active {
+  transform: scale(.95);
+}
 
 /*
  * CKEditor 5 (v37.1.0) content styles.

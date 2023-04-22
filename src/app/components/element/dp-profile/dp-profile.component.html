@@ -3,22 +3,39 @@
   <div class="main-profile-data">
 
     <div class="profile">
-      <div class="profile-picture">
-        <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg">
+      <div class="profile-picture-container">
+        <div *ngIf="$login | async as login" class="login-status-container"
+        [matTooltip]="login.loggedInStatus === 'ONLINE' ? 'Online' : 'Offline'"
+             matTooltipPosition="left"
+        >
+          <mat-icon class="online" *ngIf="login.loggedInStatus === 'ONLINE'">check_circle</mat-icon>
+          <mat-icon class="offline" *ngIf="login.loggedInStatus === 'OFFLINE'">radio_button_unchecked</mat-icon>
+        </div>
+
+        <div class="edit-container"
+             *ngIf="allowEdit"
+             (click)="editProfile()" [matTooltip]="'Edit profile'" matTooltipPosition="right">
+          <mat-icon class="profile-edit-icon">create</mat-icon>
+        </div>
+        <img class="profile-picture" src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture">
       </div>
 
       <div class="profile-details">
-        <div>{{user.username}}</div>
+        <div>{{user?.username}}</div>
+      </div>
+
+      <div class="profile-contact">
+        <div>
+          <mat-icon class="contact-icon">mail</mat-icon>
+        </div>
+        <div>
+          <mat-icon class="contact-icon">alternate_email</mat-icon>
+        </div>
+        <div><img class="contact-icon" src="assets/svg/facebook.svg" alt="Facebook"></div>
+        <div><img class="contact-icon" src="assets/svg/github.svg" alt="Github"></div>
+        <div><img class="contact-icon" src="assets/svg/twitter.svg" alt="Twitter"></div>
       </div>
 
     </div>
-
-    <div class="profile-contact">
-      <div><mat-icon>alternate_email</mat-icon> <a href="">gergo.marcell.turi@gmail.com</a></div>
-      <div><mat-icon>github</mat-icon> <a href="">gergomarcellturi</a></div>
-      <div><mat-icon>github</mat-icon> <a href="">gergomarcellturi</a></div>
-    </div>
-
   </div>
-
 </div>

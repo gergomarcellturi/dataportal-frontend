@@ -5,11 +5,13 @@ import {GlobalService} from "../../../services/global.service";
 import {AuthApiService} from "../../../services/api/auth-api.service";
 import {User} from "../../../model/User";
 import {AuthService} from "../../../services/auth.service";
+import {fadeInFromTop, fadeOutOnLeave} from "../../../consts/animations";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  animations: [fadeInFromTop, fadeOutOnLeave]
 })
 export class ProfileComponent implements OnInit {
 

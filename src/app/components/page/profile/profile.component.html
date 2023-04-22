@@ -2,7 +2,7 @@
 
 
   <div class="component-header" FadeOut [@fadeOutOnLeave] @fadeInFromTop>
-    <h3 class="component-h">New Data</h3>
+    <h3 class="component-h">Profile</h3>
     <div>
     </div>
     <mat-progress-bar
@@ -10,19 +10,25 @@
       class="component-progress-indicator"
       mode="indeterminate"></mat-progress-bar>
   </div>
-
-  <DPDivider></DPDivider>
-
   <ng-container *ngIf="$user | async as user">
+    <div
+      FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
+      <div class="inner-content">
+        <DPProfile
+          [allowEdit]="true"
+          [user]="user"></DPProfile>
+      </div>
+    </div>
+    <DPDivider></DPDivider>
+
     <div
       FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
       <div class="inner-content">
 
         <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
-          <mat-tab label="Profile">
+          <mat-tab label="Info">
 
-            <div class="inner-content">
-
+            <div class="inner-content" style="margin-top: 1rem">
 
 
             </div>

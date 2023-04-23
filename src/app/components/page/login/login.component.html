@@ -1,29 +1,17 @@
-<div class="login-page">
-  <mat-card class="card">
-    <mat-card-header>
-      <h1 class="mat-display-2">Login</h1>
-    </mat-card-header>
-    <mat-card-content>
-      <button mat-raised-button color="primary" (click)="loginWithGoogle()">
-        <mat-icon>google</mat-icon>
-        Login with Google
-      </button>
-      <button mat-raised-button color="primary" (click)="loginWithFacebook()">
-        <mat-icon>facebook</mat-icon>
-        Login with Facebook
-      </button>
-      <br><br>
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" name="email" ngModel required>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" name="password" ngModel required>
-        </mat-form-field>
-        <button mat-raised-button color="accent" class="full-width" type="submit">Login</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+<div class="component-main">
+
+
+  <div class="component-header" FadeOut [@fadeOutOnLeave] @fadeInFromTop>
+    <h3 class="component-h" style="width: unset">
+      Login
+    </h3>
+</div>
+
+  <div class="component-segment" style="justify-content: center">
+    <button mat-raised-button style="background-color: #DB4437; color: aliceblue" (click)="loginWithGoogle()">
+      Login with Google
+    </button>
+
+  </div>
+
 </div>

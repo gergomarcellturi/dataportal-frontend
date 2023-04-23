@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from 'firebase/compat/app';
-import auth = firebase.auth;
+import {fadeInFromTop, fadeOutOnLeave} from "../../../consts/animations";
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  animations: [fadeInFromTop, fadeOutOnLeave],
 })
 export class LoginComponent {
   loginForm: FormGroup;

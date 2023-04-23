@@ -2,7 +2,7 @@
 
 
   <div class="component-header" FadeOut [@fadeOutOnLeave] @fadeInFromTop>
-    <h3 class="component-h" (click)="global.goTo('my-data')">
+    <h3 class="component-h" (click)="global.back()">
       <mat-icon class="back-icon">navigate_before</mat-icon>
       Edit Data
     </h3>
@@ -49,7 +49,7 @@
                 <mat-icon>cancel</mat-icon>
               </button>
             </mat-chip>
-            <input placeholder="New fruit..."
+            <input placeholder="New Tag..."
                    [matChipInputFor]="chipList"
                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                    [matChipInputAddOnBlur]="addOnBlur"
@@ -97,7 +97,7 @@
         <div>
           <p>API Access</p>
           <mat-button-toggle-group [(ngModel)]="metadata!.dataAccess">
-            <mat-button-toggle [value]="DataAccess.PUBLIC">
+            <mat-button-toggle [value]="DataAccess.OPEN">
               <mat-icon>public</mat-icon>
               Open
             </mat-button-toggle>

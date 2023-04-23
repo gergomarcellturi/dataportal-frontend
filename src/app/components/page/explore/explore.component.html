@@ -5,6 +5,16 @@
     <h3 class="component-h">
       Explore
     </h3>
+    <div class="component-operation-container">
+      <DPInput icon="search" [value]="exploreSevice.searchString"
+               (valueChange)="exploreSevice.valueChange($event)">Search</DPInput>
+      <DPButton icon="search"
+                (click)="exploreSevice.search()"
+                appearance="success" style="margin-left: 6px">Search</DPButton>
+      <DPButton icon="clear" *ngIf="exploreSevice.isInSearch"
+                (click)="exploreSevice.clearSearch()"
+                appearance="danger" style="margin-left: 6px">Clear</DPButton>
+    </div>
     <mat-progress-bar
       [class.invisible]="!isLoading"
       class="component-progress-indicator"
@@ -16,14 +26,16 @@
     <div
       FadeOut [@fadeOutOnLeave] @fadeInFromTop class="component-segment">
       <div class="inner-content" style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 48px">
-        <div class="explore-item-container" style="min-width: 250px" *ngFor="let preview of exploreItems">
-          <DPPreviewCard [deleteEnabled]="false" [preview]="preview"></DPPreviewCard>
+        <div class="explore-item-container" style="min-width: 250px" *ngFor="let preview of exploreSevice.exploreItems">
+          <DPPreviewCard
+            (onEdit)="global.goTo('my-data/edit', $event.uid)"
+            [deleteEnabled]="false" [preview]="preview"></DPPreviewCard>
         </div>
       </div>
     </div>
 
     <div FadeOut [@fadeOutOnLeave] @fadeInFromTop class="full-width" style="display: flex; flex-direction: row; justify-content: center">
-      <DPButton *ngIf="exploreItems.length >= limit; else noMore" icon="expand_more" appearance="info"
+      <DPButton *ngIf="exploreSevice.exploreItems.length >= exploreSevice.limit; else noMore" icon="expand_more" appearance="info"
                 (click)="expand()">Load More</DPButton>
 
       <ng-template #noMore>

@@ -23,6 +23,7 @@ mat-toolbar {
   text-shadow: 0 0 6px white;
 }
 
+
 .header-label {
   color: aliceblue;
   transition: .2s;
@@ -31,10 +32,21 @@ mat-toolbar {
 
 }
 
+.header-option-no-hightlight {
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-left: 8px;
+  margin-right: 8px;
+  transition: .2s;
+}
+
 .header-option {
   background-color: transparent;
   border: none;
-
   font-size: 14px;
   display: flex;
   flex-direction: row;

@@ -61,10 +61,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: flex;
   flex-direction: row;
   width: min(876px, 90%);
-  flex-wrap: wrap;
   margin: auto;
   align-items: center;
   position: relative;
+}
+
+@media (max-width: 520px) {
+  .component-header {
+    flex-wrap: wrap;
+  }
+
 }
 
 .component-segment {

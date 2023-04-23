@@ -2,7 +2,10 @@
 
 
   <div class="component-header" FadeOut [@fadeOutOnLeave] @fadeInFromTop>
-    <h3 class="component-h">Profile</h3>
+    <h3 class="component-h" style="width: unset" (click)="global.back()">
+      <mat-icon class="back-icon">navigate_before</mat-icon>
+      Profile
+    </h3>
     <div>
     </div>
     <mat-progress-bar
@@ -16,6 +19,7 @@
       <div class="inner-content">
         <DPProfile
           [allowEdit]="true"
+          [linked]="false"
           [user]="user"></DPProfile>
       </div>
     </div>
@@ -29,16 +33,56 @@
           <mat-tab label="Info">
 
             <div class="inner-content" style="margin-top: 1rem">
-
+              <div *ngIf="$userInfo | async as info" class="description-container ck-content" [innerHTML]="info.info | safeHtml"></div>
 
             </div>
 
           </mat-tab>
-          <mat-tab label="Data">
+          <mat-tab label="Data" *ngIf="$metadataPreviews | async as previews">
+
+            <div class="profile-data-container">
+              <div class="profile-preview" *ngFor="let prev of previews">
+                <DPPreviewCard
+                  [deleteEnabled]="false"
+                  [preview]="prev"></DPPreviewCard>
+              </div>
+            </div>
 
           </mat-tab>
-          <mat-tab label="Requests">
+          <mat-tab *ngIf="requestService.requestNum">
+            <ng-template mat-tab-label>
+              <span [matBadge]="requestService.requestNum"
+                    [matBadgeHidden]="requestService.requestNum === 0"
+                    matBadgeSize="small"
+                    matBadgeColor="warn" style="padding-right: 8px">Requests</span>
+            </ng-template>
+            <div class="requests-container">
 
+              <div class="request" *ngFor="let req of requestService.$requests | async">
+
+                <div class="requester-profile">
+                  <DPProfile [userUid]="req.userUid"></DPProfile>
+                </div>
+
+                <div class="requested-datasource">
+                  <DPPreviewCard
+                    [deleteEnabled]="false"
+                    [editEnabled]="false"
+                    [previewUid]="req.metadataUid"></DPPreviewCard>
+                </div>
+
+                <div class="request-actions">
+                  <div (click)="requestService.accept(req, user)" style="color: var(--accept-color)" [matTooltip]="'Grant Access'" matTooltipPosition="below">
+                    <mat-icon>done</mat-icon>
+                  </div>
+                  <div (click)="requestService.decline(req, user)" style="color: var(--danger-color)"  [matTooltip]="'Decline Access'" matTooltipPosition="below">
+                    <mat-icon>clear</mat-icon>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
           </mat-tab>
         </mat-tab-group>
 

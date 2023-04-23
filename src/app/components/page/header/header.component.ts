@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {AuthApiService} from "../../../services/api/auth-api.service";
 import {GlobalService} from "../../../services/global.service";
+import {RequestService} from "../../../services/request.service";
 
 @Component({
   selector: 'app-header',
@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     public  auth: AngularFireAuth,
     public global: GlobalService,
+    public requestService: RequestService,
     private router: Router,
   ) {}
 

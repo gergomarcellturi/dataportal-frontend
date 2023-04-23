@@ -1,9 +1,8 @@
 import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, QueryList} from '@angular/core';
-import {AngularFirestore, Query} from "@angular/fire/compat/firestore";
-import {MetadataPreview} from "../../../model/common/MetadataPreview";
-import {Observable, of} from "rxjs";
 import {fadeInFromTop, fadeOutOnLeave} from "../../../consts/animations";
 import {AnimationService} from "../../../services/animation.service";
+import {GlobalService} from "../../../services/global.service";
+import {ExploreService} from "../../../services/explore.service";
 
 @Component({
   selector: 'app-browse',
@@ -15,43 +14,32 @@ export class ExploreComponent implements OnInit, OnDestroy {
   set fadeOutOnLeaveAnimation(query: QueryList<ElementRef<HTMLDivElement>>) {
     this.animationService.add(query, this);
   }
-  public exploreItems: MetadataPreview[] = [];
-  $exploreItems?: Observable<MetadataPreview[]>;
+
   public isLoading = false;
-  public limit = 5;
+
   constructor(
-    public store: AngularFirestore,
     public animationService: AnimationService,
+    public global: GlobalService,
     public cd: ChangeDetectorRef,
+    public exploreSevice: ExploreService,
   ) {
-    this.setSubscription();
+
   }
 
   ngOnInit(): void {
+    this.exploreSevice.refresh();
   }
 
   ngOnDestroy() {
     this.animationService.destroy(this);
   }
 
-  public setSubscription = (): void => {
-    this.isLoading = true;
-    this.store
-      .collection<MetadataPreview>('metadata_preview', ref => ref.where('status', '==', 'PUBLISHED').limit(this.limit)).valueChanges()
-      .subscribe(previews => {
-      const offset = this.exploreItems.length;
-      for (let i = offset; i < this.limit; i++) {
-        if (previews[i])
-          this.exploreItems.push(previews[i]);
-      }
-      this.isLoading = false;
-      });
-  }
-
-  expand() {
+  public expand = (): void => {
     this.isLoading = true;
     this.cd.detectChanges();
-    this.limit = this.limit + 1;
-    this.setSubscription();
+    this.exploreSevice.expand();
+    this.isLoading = false;
   }
+
+
 }

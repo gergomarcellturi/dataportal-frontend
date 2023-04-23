@@ -1,0 +1,56 @@
+.profile-data-container {
+  margin-top: 1rem;
+  /*padding: 6px;*/
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*gap: 12px;*/
+  /*width: 100%;*/
+}
+
+.profile-preview {
+
+  margin-top: 1rem;
+}
+
+.requests-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.request {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: 95%;
+  margin: 8px auto;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.requester-profile {
+
+}
+
+.requested-datasource {
+  width: 250px;
+}
+
+.request-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.request-actions div {
+  transition: .2s;
+}
+
+.request-actions div:hover {
+  cursor: pointer;
+  transform: scale(1.25);
+}
+
+.request-actions div:active {
+  transform: scale(.99);
+}

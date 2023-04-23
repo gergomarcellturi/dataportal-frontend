@@ -1,4 +1,4 @@
-<div class="preview-container noselect" (click)="click()">
+<div class="preview-container noselect" (click)="click()" *ngIf="preview">
 
   <div class="visibility-container" *ngIf="preview.status !== DataSourceStatus.PUBLISHED">
     <mat-icon
@@ -6,21 +6,6 @@
       color: var(--danger-color);
        text-shadow: 0 0 12px var(--danger-color);
        font-size: 24px">visibility_off</mat-icon>
-  </div>
-
-  <div class="action-container" *ngIf="auth.portalUser && preview.userUid === auth.portalUser.uid">
-    <mat-icon
-      *ngIf="editEnabled"
-      [matTooltip]="'Edit'"
-      matTooltipPosition="right"
-      (click)="$event.stopPropagation(); $event.preventDefault(); editClick()"
-      [inline]="true" style="color: var(--secondary-color); margin-bottom: 8px;">create</mat-icon>
-    <mat-icon
-      *ngIf="deleteEnabled"
-      [matTooltip]="'Delete'"
-      matTooltipPosition="right"
-      (click)="$event.stopPropagation(); $event.preventDefault(); deleteClick()"
-      [inline]="true" style="color: var(--danger-color); margin-bottom: 8px;">delete</mat-icon>
   </div>
 
   <div class="logo-container"
@@ -34,6 +19,21 @@
   <div class="info-container">
     <div class="upper-container">
       <div class="title-container">
+        <div class="action-container" *ngIf="auth.portalUser && preview.userUid === auth.portalUser.uid">
+          <mat-icon
+            *ngIf="editEnabled"
+            [matTooltip]="'Edit'"
+            matTooltipPosition="above"
+            (click)="$event.stopPropagation(); $event.preventDefault(); editClick()"
+            [inline]="true" style="color: var(--secondary-color); margin-bottom: 8px;">create</mat-icon>
+          <mat-icon
+            *ngIf="deleteEnabled"
+            [matTooltip]="'Delete'"
+            matTooltipPosition="above"
+            (click)="$event.stopPropagation(); $event.preventDefault(); deleteClick()"
+            [inline]="true" style="color: var(--danger-color); margin-bottom: 8px;">delete</mat-icon>
+        </div>
+
         {{preview.title}}
       </div>
       <div class="info">
@@ -47,7 +47,9 @@
       <span>
         {{preview.summary}}
       </span>
-
+      <div class="tag-container">
+        <span *ngFor="let tag of preview.tags" class="tag">{{tag.title}} # </span>
+      </div>
     </div>
 
   </div>

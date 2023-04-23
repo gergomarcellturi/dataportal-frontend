@@ -9,7 +9,6 @@ import {provideFirestore, getFirestore} from '@angular/fire/firestore';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoginComponent} from './components/page/login/login.component';
 import {HeaderComponent} from './components/page/header/header.component';
-import {HomeComponent} from './components/page/home/home.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
@@ -48,13 +47,14 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { ProfileComponent } from './components/page/profile/profile.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import { DpProfileComponent } from './components/element/dp-profile/dp-profile.component';
+import { ProfileDialogComponent } from './components/dialogs/profile-dialog/profile-dialog.component';
+import {MatBadgeModule} from "@angular/material/badge";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    HomeComponent,
     DpButtonComponent,
     MyDataComponent,
     DpInputDirective,
@@ -71,37 +71,39 @@ import { DpProfileComponent } from './components/element/dp-profile/dp-profile.c
     SafeHtmlPipe,
     ProfileComponent,
     DpProfileComponent,
+    ProfileDialogComponent,
   ],
-  imports: [
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    BrowserModule,
-    AppRoutingModule,
-    AngularFireAuthModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    HttpClientModule,
-    MatCardModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatSnackBarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatChipsModule,
-    MatProgressBarModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatGridListModule,
-    CKEditorModule,
-    MatButtonToggleModule,
-    MatDialogModule,
-    MatTabsModule
-  ],
+    imports: [
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule,
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
+        BrowserModule,
+        AppRoutingModule,
+        AngularFireAuthModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        HttpClientModule,
+        MatCardModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatChipsModule,
+        MatProgressBarModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        MatGridListModule,
+        CKEditorModule,
+        MatButtonToggleModule,
+        MatDialogModule,
+        MatTabsModule,
+        MatBadgeModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

@@ -1,8 +1,7 @@
 <mat-toolbar color="primary" class="noselect">
   <div class="option-group">
-    <button class="header-option">
-      <span class="header-label"
-            (click)="global.home()">Data Portal</span>
+    <button class="header-option-no-hightlight">
+      <span class="header-label">Data Portal</span>
     </button>
 
   </div>
@@ -13,17 +12,15 @@
         <span class="header-icon"><mat-icon [inline]="true">search</mat-icon></span>
         <span class="header-label">Explore</span>
       </button>
-
-
-      <button class="header-option"  (click)="global.goTo('articles')">
-        <span class="header-icon"><mat-icon [inline]="true">article</mat-icon></span>
-        <span class="header-label">Articles</span>
-      </button>
     </div>
 
 
     <div class="option-group">
-      <button class="header-option"  (click)="global.goTo('profile')">
+      <button class="header-option"  (click)="global.goTo('profile')"
+              [matBadge]="requestService.requestNum"
+              [matBadgeHidden]="requestService.requestNum === 0"
+              matBadgeSize="small"
+              matBadgeColor="warn">
         <span class="header-icon"><mat-icon [inline]="true">person</mat-icon></span>
         <span class="header-label">Profile</span>
       </button>

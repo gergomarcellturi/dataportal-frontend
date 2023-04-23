@@ -1,4 +1,4 @@
-<div class="profile-container">
+<div class="profile-container" *ngIf="userInfo">
 
   <div class="main-profile-data">
 
@@ -13,27 +13,36 @@
         </div>
 
         <div class="edit-container"
-             *ngIf="allowEdit"
-             (click)="editProfile()" [matTooltip]="'Edit profile'" matTooltipPosition="right">
+             *ngIf="allowEdit && user && user.uid && (auth.portalUser?.uid === user.uid)"
+             (click)="editProfile(user!.uid)" [matTooltip]="'Edit profile'" matTooltipPosition="right">
           <mat-icon class="profile-edit-icon">create</mat-icon>
         </div>
-        <img class="profile-picture" src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture">
+        <img *ngIf="userInfo.profilePicture" class="profile-picture" [src]="userInfo.profilePicture" alt="Profile Picture">
       </div>
 
       <div class="profile-details">
-        <div>{{user?.username}}</div>
+        <div>
+          <span *ngIf="!linked">
+            {{user?.username}}
+          </span>
+          <a *ngIf="linked" [routerLink]="['/profile/' + user?.uid]">{{user?.username}}</a>
+        </div>
       </div>
 
-      <div class="profile-contact">
-        <div>
-          <mat-icon class="contact-icon">mail</mat-icon>
+      <div class="profile-contact" *ngIf="userInfoContact">
+        <div *ngIf="userInfoContact.website">
+          <a href="{{userInfoContact.website}}" target="_blank">
+            <mat-icon class="contact-icon">public</mat-icon>
+          </a>
         </div>
-        <div>
-          <mat-icon class="contact-icon">alternate_email</mat-icon>
+        <div *ngIf="userInfoContact.email">
+          <a href="mailto://{{userInfoContact.email}}">
+            <mat-icon class="contact-icon">alternate_email</mat-icon>
+          </a>
         </div>
-        <div><img class="contact-icon" src="assets/svg/facebook.svg" alt="Facebook"></div>
-        <div><img class="contact-icon" src="assets/svg/github.svg" alt="Github"></div>
-        <div><img class="contact-icon" src="assets/svg/twitter.svg" alt="Twitter"></div>
+        <div *ngIf="userInfoContact.facebook"><a href="{{userInfoContact.facebook}}" target="_blank"><img class="contact-icon" src="assets/svg/facebook.svg" alt="Facebook"></a></div>
+        <div *ngIf="userInfoContact.github"><a href="{{userInfoContact.github}}" target="_blank"><img class="contact-icon" src="assets/svg/github.svg" alt="Github"></a></div>
+        <div *ngIf="userInfoContact.twitter"><a href="{{userInfoContact.twitter}}" target="_blank"><img class="contact-icon" src="assets/svg/twitter.svg" alt="Twitter"></a></div>
       </div>
 
     </div>

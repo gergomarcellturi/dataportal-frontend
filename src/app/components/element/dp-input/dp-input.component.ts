@@ -8,7 +8,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class DpInputComponent implements OnInit {
 
   @Input() icon: string = '';
-
   @Input() value?: string = '';
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 

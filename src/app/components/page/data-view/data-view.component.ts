@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Observable, zip} from "rxjs";
+import {zip} from "rxjs";
 import {DataApiService} from "../../../services/api/data-api.service";
 import {GlobalService} from "../../../services/global.service";
 import {Metadata} from "../../../model/storage/Metadata";
@@ -10,15 +10,15 @@ import {AuthApiService} from "../../../services/api/auth-api.service";
 import {User} from "../../../model/User";
 import {AuthService} from "../../../services/auth.service";
 import {DataSourceStatus} from "../../../model/enum/DataSourceStatus";
-import { DataAccess } from 'src/app/model/enum/DataAccess';
-import { DataDownloadAccess } from 'src/app/model/enum/DataDownloadAccess';
+import {DataAccess} from 'src/app/model/enum/DataAccess';
+import {DataDownloadAccess} from 'src/app/model/enum/DataDownloadAccess';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {environment} from "../../../../environments/environment";
 import firebase from 'firebase/compat/app';
-import Timestamp = firebase.firestore.Timestamp;
 import {FadeOutDirective} from "../../../directives/fade-out.directive";
 import {AnimationService} from "../../../services/animation.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
   selector: 'app-data-view',
@@ -71,10 +71,10 @@ export class DataViewComponent implements OnInit, AfterViewInit {
         this.auth.$portalUser.subscribe(user => {
           this.currUser = user;
           if (this.currUser) {
-            this.checkAccess();
             this.checkRequested();
-            this.setApiLinks();
           }
+          this.setApiLinks();
+          this.checkAccess();
         });
         if (!this.metadata?.uid) return;
         this.authApi.getUserByUid(this.metadata.userUid).subscribe(user => {
@@ -93,9 +93,14 @@ export class DataViewComponent implements OnInit, AfterViewInit {
 
   public setApiLinks = (): void => {
     this.auth.$userApiKey.subscribe(key => {
-      this.apiLink = `${environment.storageRoot}/api/file/${this.metadata?.uid}?apiKey=${key}`;
-      this.apiSegmentedLink = `${environment.storageRoot}/api/segmented/${this.metadata?.uid}?apiKey=${key}&segment=0`;
+      if (this.metadata?.dataAccess === DataAccess.OPEN && !key) {
+        this.apiLink = `${environment.storageRoot}/api/file/${this.metadata?.uid}`;
+        this.apiSegmentedLink = `${environment.storageRoot}/api/segmented/${this.metadata?.uid}`;
 
+      } else {
+        this.apiLink = `${environment.storageRoot}/api/file/${this.metadata?.uid}?apiKey=${key}`;
+        this.apiSegmentedLink = `${environment.storageRoot}/api/segmented/${this.metadata?.uid}?apiKey=${key}&segment=0`;
+      }
     })
   }
 
@@ -106,6 +111,11 @@ export class DataViewComponent implements OnInit, AfterViewInit {
 
   public checkAccess = (): void => {
     this.auth.$portalUser.subscribe(user => {
+      if (this.metadata?.dataAccess === DataAccess.OPEN) {
+        this.canAccess = true;
+        return;
+      }
+
       if (user?.uid === this.metadata?.userUid) {
         this.canAccess = true;
         return;
@@ -141,6 +151,7 @@ export class DataViewComponent implements OnInit, AfterViewInit {
       userUid: this.currUser?.uid,
       metadataUid: metadata.uid,
       timestamp: Timestamp.now(),
+      done: false,
     }
     collectionRef.add(data).then();
   }

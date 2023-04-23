@@ -5,6 +5,7 @@ import {getFileSizeStringFromSize} from "../../../consts/misc";
 import {AuthService} from "../../../services/auth.service";
 import {DataSourceStatus} from "../../../model/enum/DataSourceStatus";
 import {GlobalService} from "../../../services/global.service";
+import {AngularFirestore} from "@angular/fire/compat/firestore";
 
 @Component({
   selector: 'DPPreviewCard',
@@ -13,7 +14,8 @@ import {GlobalService} from "../../../services/global.service";
 })
 export class DpPreviewCardComponent implements OnInit {
 
-  @Input() public preview!: MetadataPreview;
+  @Input() public previewUid?: string;
+  @Input() public preview?: MetadataPreview;
   @Input() public editEnabled = true;
   @Input() public deleteEnabled = true;
   @Input() public disableView = false;
@@ -26,12 +28,23 @@ export class DpPreviewCardComponent implements OnInit {
 
   constructor(
     public auth: AuthService,
+    public store: AngularFirestore,
     public global: GlobalService,
   ) {
   }
 
   ngOnInit(): void {
-    if (this.preview.size) this.fileSizeString = getFileSizeStringFromSize(this.preview.size);
+
+    if (this.previewUid && !this.preview) {
+      this.store.collection('metadata_preview').doc(this.previewUid).get().subscribe(snap => {
+        this.preview = snap.data() as MetadataPreview;
+        this. ngOnInit();
+      })
+      return;
+    }
+
+
+    if (this.preview?.size) this.fileSizeString = getFileSizeStringFromSize(this.preview.size);
   }
 
   public editClick = (): void => {
@@ -41,10 +54,9 @@ export class DpPreviewCardComponent implements OnInit {
     this.onDelete.emit(this.preview);
   }
   public click = (): void => {
-    console.log('click');
     this.onClick.emit(this.preview);
     if (this.disableView) return;
-    this.global.goTo('view', this.preview.uid);
+    this.global.goTo('view', this.preview!.uid);
   }
 
 }

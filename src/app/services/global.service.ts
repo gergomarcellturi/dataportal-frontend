@@ -1,10 +1,12 @@
-import {ChangeDetectorRef, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {routes} from "../app-routing.module";
 import {Router} from "@angular/router";
 import {AnimationService} from "./animation.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ConfirmationDialogComponent} from "../components/dialogs/confirmation-dialog/confirmation-dialog.component";
 import {AuthService} from "./auth.service";
+import { Location } from '@angular/common';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class GlobalService {
     private dialog: MatDialog,
     private animationService: AnimationService,
     private auth: AuthService,
+    private location: Location
   ) { }
 
   public goTo(path: typeof routes[number]['path'], param?: string | number | boolean) {
@@ -31,6 +34,7 @@ export class GlobalService {
   }
 
   public back = (): void => {
+    this.location.back();
   }
 
   public home = (): void => {

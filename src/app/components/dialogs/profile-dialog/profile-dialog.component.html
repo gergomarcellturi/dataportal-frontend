@@ -1,0 +1,77 @@
+<div class="large-dialog-window">
+
+  <h4>Edit Profile</h4>
+
+  <DPDivider></DPDivider>
+
+  <mat-tab-group>
+
+    <mat-tab label="Info">
+
+      <div class="info-container" *ngIf="user">
+        <div class="nick-container">
+          <mat-form-field>
+            <mat-label>Nickname</mat-label>
+            <input matInput [(ngModel)]="user.username">
+          </mat-form-field>
+        </div>
+
+        <DPDivider></DPDivider>
+
+        <h5 *ngIf="userInfoContact"> Contacts</h5>
+        <div class="contacts-container" *ngIf="userInfoContact">
+          <div class="contact-container">
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input matInput [(ngModel)]="userInfoContact.email">
+            </mat-form-field>
+          </div>
+          <div class="contact-container">
+            <mat-form-field>
+              <mat-label>Website</mat-label>
+              <input matInput [(ngModel)]="userInfoContact.website">
+            </mat-form-field>
+          </div>
+          <div class="contact-container">
+            <mat-form-field>
+              <mat-label>GitHub</mat-label>
+              <input matInput [(ngModel)]="userInfoContact.github">
+            </mat-form-field>
+          </div>
+          <div class="contact-container">
+            <mat-form-field>
+              <mat-label>Facebook</mat-label>
+              <input matInput [(ngModel)]="userInfoContact.facebook">
+            </mat-form-field>
+          </div>
+          <div class="contact-container">
+            <mat-form-field>
+              <mat-label>Twitter</mat-label>
+              <input matInput [(ngModel)]="userInfoContact.twitter">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+
+    </mat-tab>
+
+    <mat-tab label="About">
+      <div class="about-container" *ngIf="userInfo">
+        <ckeditor
+          [editor]="editor"
+          [(ngModel)]="userInfo.info"
+          [config]="ckeditorConfig"></ckeditor>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  <DPDivider></DPDivider>
+
+  <mat-dialog-actions>
+    <div class="action-container">
+      <DPButton icon="clear" [mat-dialog-close]="false" appearance="danger">Cancel</DPButton>
+      <DPButton [disabled]="!user!.username" icon="save" (click)="save()" appearance="success">Save</DPButton>
+    </div>
+  </mat-dialog-actions>
+
+</div>

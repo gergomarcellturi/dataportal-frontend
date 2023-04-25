@@ -11,3 +11,24 @@
   background-color: var(--danger-color) !important;
   color: aliceblue;
 }
+
+/deep/ .open.mat-button-toggle-checked {
+  background-color: var(--accept-color);
+  color: aliceblue;
+}
+
+/deep/ .public.mat-button-toggle-checked {
+  background-color: var(--secondary-color);
+  color: aliceblue;
+}
+/deep/ .by-request.mat-button-toggle-checked {
+  background-color: var(--warn-color) !important;
+  color: aliceblue;
+}
+
+
+/deep/ .private.mat-button-toggle-checked {
+  background-color: var(--danger-color) !important;
+  color: aliceblue;
+}
+

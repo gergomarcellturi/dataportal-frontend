@@ -1,5 +1,5 @@
 .preview-container {
-  height: 80px;
+  height: 90px;
   max-width: 250px;
   border-radius: 2px;
   display: flex;
@@ -10,9 +10,6 @@
 
 .preview-container:hover {
   cursor: pointer;
-  /*transform: scale(1.01);*/
-  /*padding-top: 4px;*/
-  /*padding-bottom: 4px;*/
 }
 
 .preview-container:active {

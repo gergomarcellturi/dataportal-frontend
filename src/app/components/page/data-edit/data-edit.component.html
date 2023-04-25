@@ -97,19 +97,19 @@
         <div>
           <p>API Access</p>
           <mat-button-toggle-group [(ngModel)]="metadata!.dataAccess">
-            <mat-button-toggle [value]="DataAccess.OPEN">
+            <mat-button-toggle class="open" [value]="DataAccess.OPEN">
               <mat-icon>public</mat-icon>
               Open
             </mat-button-toggle>
-            <mat-button-toggle [value]="DataAccess.PUBLIC">
+            <mat-button-toggle class="public" [value]="DataAccess.PUBLIC">
               <mat-icon>lock_open</mat-icon>
               Public
             </mat-button-toggle>
-            <mat-button-toggle [value]="DataAccess.REQUEST">
+            <mat-button-toggle class="by-request" [value]="DataAccess.REQUEST">
               <mat-icon>key</mat-icon>
               By Request
             </mat-button-toggle>
-            <mat-button-toggle [value]="DataAccess.PRIVATE">
+            <mat-button-toggle class="private" [value]="DataAccess.PRIVATE">
               <mat-icon>lock</mat-icon>
               Private
             </mat-button-toggle>
@@ -119,11 +119,11 @@
         <div>
           <p>Download Access</p>
           <mat-button-toggle-group [(ngModel)]="metadata!.dataDownloadAccess">
-            <mat-button-toggle [value]="DataDownloadAccess.PUBLIC">
+            <mat-button-toggle class="public" [value]="DataDownloadAccess.PUBLIC">
               <mat-icon>public</mat-icon>
               Public
             </mat-button-toggle>
-            <mat-button-toggle [value]="DataDownloadAccess.DISABLED">
+            <mat-button-toggle class="private" [value]="DataDownloadAccess.DISABLED">
               <mat-icon>lock</mat-icon>
               Private
             </mat-button-toggle>

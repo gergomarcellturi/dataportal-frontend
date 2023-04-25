@@ -72,17 +72,21 @@ export class ExploreService {
       const searchStringNgrams = this.generateNgrams(searchStringLower, 3);
 
       const searchInTitle = this.store.collection('metadata_preview', ref =>
-        ref.where('titleNgrams', 'array-contains-any', searchStringNgrams)
+        ref.where('status', '==', 'PUBLISHED')
+          .where('titleNgrams', 'array-contains-any', searchStringNgrams)
           .limit(this.limit)
       ).valueChanges();
 
       const searchInSummary = this.store.collection('metadata_preview', ref =>
-        ref.where('summaryNgrams', 'array-contains-any', searchStringNgrams)
+        ref.where('status', '==', 'PUBLISHED')
+          .where('summaryNgrams', 'array-contains-any', searchStringNgrams)
           .limit(this.limit)
       ).valueChanges();
 
       const searchInTags = this.store.collection('metadata_preview', ref =>
-        ref.where('allTagsNgrams', 'array-contains-any', searchStringNgrams)
+        ref
+          .where('status', '==', 'PUBLISHED')
+          .where('allTagsNgrams', 'array-contains-any', searchStringNgrams)
           .limit(this.limit)
       ).valueChanges();
 
@@ -121,17 +125,10 @@ export class ExploreService {
     return ngrams;
   }
 
-
-  public setRef = (ref: CollectionReference): CollectionReference => {
-    ref.where('status', '==', 'PUBLISHED')
-    ref.limit(this.limit);
-    return ref;
-  }
-
   public setSubscription = (): void => {
     this.isLoading = true;
     this.store
-      .collection<MetadataPreview>('metadata_preview', this.setRef).valueChanges()
+      .collection<MetadataPreview>('metadata_preview', ref => ref.where('status', '==', 'PUBLISHED').limit(this.limit)).valueChanges()
       .subscribe(previews => {
         const offset = this.exploreItems.length;
         for (let i = offset; i < this.limit; i++) {

@@ -98,6 +98,8 @@ export class DpFileComponent implements OnInit {
     fileInput.files = null;
     fileInput.value = '';
     this.confirmed = !this.confirmationRequired;
+    this.metadata = undefined;
+    this.onMetadataChange.emit(undefined)
     this.fileChange.emit(this.file);
     this.onClear.emit();
   }

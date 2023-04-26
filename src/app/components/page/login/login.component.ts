@@ -39,7 +39,7 @@ export class LoginComponent {
   loginWithGoogle() {
     this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(() => this.router.navigate(['/']))
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   }
 
   loginWithFacebook() {

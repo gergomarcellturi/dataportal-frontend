@@ -25,7 +25,7 @@
   transition: .3s;
 }
 
-.preview-container:hover .action-container {
+.preview-container:hover .action-container[editable=true] {
   opacity: 1;
   width: 18px;
   padding-left: 6px;

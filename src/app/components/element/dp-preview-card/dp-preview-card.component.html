@@ -19,7 +19,9 @@
   <div class="info-container">
     <div class="upper-container">
       <div class="title-container">
-        <div class="action-container" *ngIf="auth.portalUser && preview.userUid === auth.portalUser.uid">
+        <div class="action-container"
+             [attr.editable]="editEnabled"
+             *ngIf="auth.portalUser && preview.userUid === auth.portalUser.uid">
           <mat-icon
             *ngIf="editEnabled"
             [matTooltip]="'Edit'"

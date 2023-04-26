@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, switchMap} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {User} from "../model/User";
 import {map} from "rxjs/operators";
@@ -34,10 +34,6 @@ export class AuthService {
             if (!this.portalUser || user.uid !== this.portalUser.uid)
               this.$portalUser.next(user);
             this.authApi.login().subscribe();
-            const sub2 = this.authApi.getCurrentApiKey().subscribe(key => {
-              if (key) this.$userApiKey.next(key);
-              sub2.unsubscribe();
-            })
             sub1.unsubscribe();
           });
         } else {
